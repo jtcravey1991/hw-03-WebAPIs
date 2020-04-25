@@ -1,0 +1,33 @@
+body {
+    background: rgb(36, 36, 36);
+    color: white;
+    text-align: center;
+}
+
+h1 {
+    font-size: 30px;
+    margin-top: 10px;
+}
+
+h2 {
+    font-size: 23px;
+}
+
+.quizContainer {
+    margin: 30px auto 0;
+    max-width: 50%;
+    height: 500px;
+    border-width: 1.5px;
+    border-style: solid;
+    border-color: white;
+    border-radius: 10px;
+    background: rgb(70, 70, 70);
+}
+
+@media only screen and (max-width: 600px) {
+    
+    .quizContainer{
+        max-width: 90%;
+        height: 70vh;
+    }
+}
