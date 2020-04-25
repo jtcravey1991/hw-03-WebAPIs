@@ -53,8 +53,17 @@ h3 {
     margin: 30px 0;
 }
 
+.displayScreen h2 {
+    margin-bottom: 15px;
+}
+
+#highScoreList li {
+    margin: 5px 0;
+}
+
 .mainButton {
     margin: 10px;
+    margin-top: 25px;
     border-radius: 7px;
     padding: 10px 20px;
     background-color: white;
