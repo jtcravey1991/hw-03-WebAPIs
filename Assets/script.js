@@ -1,3 +1,4 @@
+//DOM variables
 var quizContainer = document.getElementById("quizContainer");
 var startButton = document.getElementById("startButton");
 var questionContent = document.getElementById("questionContent");
@@ -5,7 +6,9 @@ var questionNumberSpan = document.getElementById("questionNumberSpan");
 var currentQuestion = document.getElementById("currentQuestion");
 var answerDisplayList = document.getElementById("answerDisplayList");
 var timeLeftSpan = document.getElementById("timeLeftSpan");
+var results = document.getElementById("results");
 
+// array of question objects
 var questionObjects = [
     {
         question: "What does DOM stand for?",
@@ -49,6 +52,10 @@ var questionObjects = [
     }
 ]
 
+//array of top scores
+var topScores = [];
+
+// start button listener
 startButton.addEventListener("click", function () {
     startButton.style.display = "none";
     questionContent.style.display = "block";
@@ -56,7 +63,28 @@ startButton.addEventListener("click", function () {
     displayQuestion(0);
 });
 
+// answer list listener
+answerDisplayList.addEventListener("click", function (e) {
+    if (e.target.matches("button")) {
+        var index = parseInt(questionNumberSpan.textContent) - 1;
+        var answer = e.target.getAttribute("id");
+        var isCorrect = checkAnswer(index, answer);
+        if (isCorrect === true) {
+            results.textContent = "Correct";
+        }
+        else {
+            results.textContent = "Wrong";
+        }
+        setTimeout(clearResults, 1500)
+    }
+});
+
+/* displays a question from the questionObjects array, along with possible answers
+Arguments:
+index: index of questionObjects of the question you'd like to display
+*/
 function displayQuestion (index) {
+    var smoke;
     questionNumberSpan.textContent = parseInt(index) + 1;
     currentQuestion.textContent = questionObjects[index].question;
     for (var i = 0; i < questionObjects[index].possibleAnswers.length; i++) {
@@ -70,3 +98,21 @@ function displayQuestion (index) {
     }
 }
 
+/* checks if the user answer is correct
+Arguments:
+index: the index of the current question in questionObjects
+answer: the users answer
+*/
+function checkAnswer(index, answer) {
+    var userAnswer = parseInt(answer);
+    var correctAnswer = parseInt(questionObjects[index].correctAnswer)
+    var isCorrect = false;
+    if (userAnswer === correctAnswer) {
+        isCorrect = true;
+    }
+    return isCorrect;
+}
+
+function clearResults() {
+    results.textContent = "";
+}

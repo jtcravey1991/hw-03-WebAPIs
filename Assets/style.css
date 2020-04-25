@@ -66,6 +66,10 @@ li button {
     border-radius: 7px;   
 }
 
+#results {
+    margin-top: 10px;
+}
+
 li button:hover {
     background: white;
     border-color:black;
