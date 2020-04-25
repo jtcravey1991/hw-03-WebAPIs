@@ -47,8 +47,8 @@ h3 {
     margin: 0 auto;
 }
 
-#startButton {
-    left: 50%;
+.mainButton {
+    margin: 10px;
     border-radius: 7px;
     padding: 10px 20px;
     background-color: white;
@@ -95,4 +95,8 @@ li button:hover {
         height: max-content;
         min-height: 200px;
     }
+}
+
+.hide {
+    display: none;
 }

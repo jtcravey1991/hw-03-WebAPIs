@@ -8,74 +8,86 @@ var answerDisplayList = document.getElementById("answerDisplayList");
 var timeLeftSpan = document.getElementById("timeLeftSpan");
 var results = document.getElementById("results");
 
+// used to track current index
+var currentIndex = 0;
+
+//
+var timeLeft = 60;
+
 // array of question objects
 var questionObjects = [
     {
         question: "What does DOM stand for?",
         possibleAnswers: ["Donuts On Monday", "Dont Order Macaroni", "Dorks Only Memorize", "Document Object Model"],
-        correctAnswer:"3"
+        correctAnswer: "3"
     },
     {
         question: "What type of function, often called in an event listener, does not need to be named?",
         possibleAnswers: ["Mystery Function", "Anonymous Function", "Nameless Function", "Listener Function"],
-        correctAnswer:"1"
+        correctAnswer: "1"
     },
     {
         question: "What is the document method for changing an elements attributes?",
         possibleAnswers: ["setAttribute()", "getAttribute()", "pushAttribute()", "attributeSet()"],
-        correctAnswer:"0"
+        correctAnswer: "0"
     },
     {
         question: "What is it called when you add an element to the end of another element?",
         possibleAnswers: ["prepend", "suspend", "append", "add to the bottom"],
-        correctAnswer:"2"
+        correctAnswer: "2"
     },
     {
         question: "What is the function to stop an interval?",
         possibleAnswers: ["stopTime()", "clearInterval()", "clearTimeout()", "stop()"],
-        correctAnswer:"1"
+        correctAnswer: "1"
     },
     {
         question: "What is the term for adding an event listener to an element, then using if statements to determine if the function runs based on the event targets id?",
         possibleAnswers: ["Event Delegation", "Listener Statement", "Event Separation", "Event Ifs"],
-        correctAnswer:"0"
+        correctAnswer: "0"
     },
     {
         question: "What function do you call to stop a submit button in a form from refreshing the page?",
         possibleAnswers: ["stopRefresh()", "cancelSubmit()", "dontDoIt()", "preventDefault()"],
-        correctAnswer:"3"
+        correctAnswer: "3"
     },
     {
         question: "What is JSON data?",
         possibleAnswers: ["A name minus the 'a'", "Jean Shorts On Never", "Javascript Object Notation", "Just Smell Only Noodles"],
-        correctAnswer:"2"
+        correctAnswer: "2"
     }
 ]
 
-//array of top scores
-var topScores = [];
-
 // start button listener
 startButton.addEventListener("click", function () {
-    startButton.style.display = "none";
+    startButton.classList.add("hide");
+    highScoresButton.classList.add("hide");
     questionContent.style.display = "block";
     quizContainer.style.display = "block";
-    displayQuestion(0);
+    displayQuestion(currentIndex);
+    startTimer();
+    timeLeftSpan.textContent = timeLeft;
 });
 
 // answer list listener
 answerDisplayList.addEventListener("click", function (e) {
     if (e.target.matches("button")) {
-        var index = parseInt(questionNumberSpan.textContent) - 1;
         var answer = e.target.getAttribute("id");
-        var isCorrect = checkAnswer(index, answer);
+        var isCorrect = checkAnswer(currentIndex, answer);
         if (isCorrect === true) {
             results.textContent = "Correct";
         }
         else {
             results.textContent = "Wrong";
+            timeLeft -= 10;
+            timeLeftSpan.textContent = timeLeft;
         }
         setTimeout(clearResults, 1500)
+        if (currentIndex < questionObjects.length - 1) {
+            currentIndex++;
+            displayQuestion(currentIndex);
+            console.log(currentIndex);
+        }
     }
 });
 
@@ -83,8 +95,8 @@ answerDisplayList.addEventListener("click", function (e) {
 Arguments:
 index: index of questionObjects of the question you'd like to display
 */
-function displayQuestion (index) {
-    var smoke;
+function displayQuestion(index) {
+    answerDisplayList.innerHTML = "";
     questionNumberSpan.textContent = parseInt(index) + 1;
     currentQuestion.textContent = questionObjects[index].question;
     for (var i = 0; i < questionObjects[index].possibleAnswers.length; i++) {
@@ -115,4 +127,25 @@ function checkAnswer(index, answer) {
 
 function clearResults() {
     results.textContent = "";
+}
+
+function startTimer() {
+    var timer = setInterval(function () {
+        timeLeft--;
+        if (timeLeft < 0) {
+            alert("You have failed, please try again!");
+            initialize();
+            clearInterval(timer);
+        }
+        timeLeftSpan.textContent = timeLeft;
+    }, 1000)
+}
+
+function initialize() {
+    currentIndex = 0;
+    timeLeft = 60;
+    questionContent.style.display = "none";
+    startButton.classList.remove("hide");
+    highScoresButton.classList.remove("hide");
+    quizContainer.setAttribute("style", "justify-content: center;")
 }
