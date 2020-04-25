@@ -11,13 +11,37 @@ var victoryScreen = document.getElementById("victoryScreen");
 var finalScoreSpan = document.getElementById("finalScoreSpan");
 
 // used to track current index
-var currentIndex = 0;
+var currentIndex;
 
 // time left on the clock
-var timeLeft = 60;
+var timeLeft;
 
 // declaring interval variable
 var timer;
+
+// array of high scores
+var highScores = [
+    {
+        name:"None",
+        score:0
+    }
+    {
+        name:"None",
+        score:0
+    }
+    {
+        name:"None",
+        score:0
+    }
+    {
+        name:"None",
+        score:0
+    }
+    {
+        name:"None",
+        score:0
+    }
+];
 
 // array of question objects
 var questionObjects = [
@@ -62,6 +86,9 @@ var questionObjects = [
         correctAnswer: "2"
     }
 ]
+
+//initializes webpage
+initialize();
 
 // start button listener
 startButton.addEventListener("click", function () {
@@ -135,10 +162,12 @@ function checkAnswer(index, answer) {
     return isCorrect;
 }
 
+// clears the results of the last question
 function clearResults() {
     results.textContent = "";
 }
 
+// starts the clock for the timed quiz
 function startTimer() {
     timer = setInterval(function () {
         timeLeft--;
@@ -151,6 +180,7 @@ function startTimer() {
     }, 1000)
 }
 
+//initializes the page, resetting everything
 function initialize() {
     currentIndex = 0;
     timeLeft = 60;
@@ -162,6 +192,7 @@ function initialize() {
     quizContainer.setAttribute("style", "justify-content: center;");
 }
 
+//displays victory screen and gets ready to run again
 function displayVictoryScreen() {
     questionContent.style.display = "none";
     finalScoreSpan.textContent = timeLeft;
@@ -170,3 +201,21 @@ function displayVictoryScreen() {
     startButton.classList.remove("hide");
     highScoresButton.classList.remove("hide");
 }
+
+//checks if score is top 5 and adds it to array if so
+function checkScore() {
+    var highScore = {
+        name:"",
+        score:timeLeft
+    };
+
+    for (var i = 0; i < highScores.length; i++) {
+        if (timeLeft > parseInt(highScores[i].score)) {
+            highScore.name = prompt("Congrats! You made a high score! Please enter your name.")
+            highScores.splice(i, 1, highScore);
+            i = highScores.length;
+        }
+    }
+}
+
+function renderHighScores()
