@@ -198,6 +198,7 @@ function startTimer() {
 
 //initializes the page, resetting everything
 function initialize() {
+    loadScores();
     currentIndex = 0;
     timeLeft = 60;
     highScoreScreen.style.display = "none";
@@ -240,6 +241,7 @@ function checkScore() {
         if (timeLeft > parseInt(highScores[i].score)) {
             highScore.name = prompt("Congrats! You made a high score! Please enter your name.")
             highScores.splice(i, 1, highScore);
+            saveScores();
             i = highScores.length;
         }
     }
@@ -252,5 +254,18 @@ function renderHighScores() {
         var score = document.createElement("li");
         score.textContent = ((i + 1) + ".  " + highScores[i].name + ":  " + highScores[i].score);
         highScoreList.appendChild(score);
+    }
+}
+
+// saves high scores to local memory
+function saveScores() {
+    localStorage.setItem("highScores", JSON.stringify(highScores));
+}
+
+// loads high scores from local memory
+function loadScores() {
+    var tempScores = JSON.parse(localStorage.getItem("highScores"));
+    if (tempScores !== null) {
+        highScores = tempScores;
     }
 }
