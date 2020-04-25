@@ -24,19 +24,19 @@ var highScores = [
     {
         name:"None",
         score:0
-    }
+    },
     {
         name:"None",
         score:0
-    }
+    },
     {
         name:"None",
         score:0
-    }
+    },
     {
         name:"None",
         score:0
-    }
+    },
     {
         name:"None",
         score:0
