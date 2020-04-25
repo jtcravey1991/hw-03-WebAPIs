@@ -9,6 +9,9 @@ var timeLeftSpan = document.getElementById("timeLeftSpan");
 var results = document.getElementById("results");
 var victoryScreen = document.getElementById("victoryScreen");
 var finalScoreSpan = document.getElementById("finalScoreSpan");
+var highScoreScreen = document.getElementById("highScoreScreen");
+var highScoreList = document.getElementById("highScoreList");
+var backButton =document.getElementById("backButton");
 
 // used to track current index
 var currentIndex;
@@ -22,24 +25,24 @@ var timer;
 // array of high scores
 var highScores = [
     {
-        name:"None",
-        score:0
+        name: "None",
+        score: 0
     },
     {
-        name:"None",
-        score:0
+        name: "None",
+        score: 0
     },
     {
-        name:"None",
-        score:0
+        name: "None",
+        score: 0
     },
     {
-        name:"None",
-        score:0
+        name: "None",
+        score: 0
     },
     {
-        name:"None",
-        score:0
+        name: "None",
+        score: 0
     }
 ];
 
@@ -95,6 +98,7 @@ startButton.addEventListener("click", function () {
     timeLeft = 60;
     currentIndex = 0;
     victoryScreen.style.display = "none";
+    highScoreScreen.style.display = "none";
     startButton.classList.add("hide");
     highScoresButton.classList.add("hide");
     questionContent.style.display = "block";
@@ -122,10 +126,22 @@ answerDisplayList.addEventListener("click", function (e) {
         if (currentIndex === questionObjects.length) {
             clearInterval(timer);
             displayVictoryScreen();
+            checkScore();
             return;
         }
         displayQuestion(currentIndex);
     }
+});
+
+// high scores button listener
+highScoresButton.addEventListener("click", function () {
+    renderHighScores();
+    displayHighScoreScreen();
+});
+
+//back button event listener
+backButton.addEventListener("click", function () {
+    initialize();
 });
 
 /* displays a question from the questionObjects array, along with possible answers
@@ -184,6 +200,7 @@ function startTimer() {
 function initialize() {
     currentIndex = 0;
     timeLeft = 60;
+    highScoreScreen.style.display = "none";
     victoryScreen.style.display = "none";
     questionContent.style.display = "none";
     startButton.textContent = "Start!";
@@ -202,11 +219,21 @@ function displayVictoryScreen() {
     highScoresButton.classList.remove("hide");
 }
 
+function displayHighScoreScreen() {
+    questionContent.style.display = "none";
+    victoryScreen.style.display = "none";
+    startButton.textContent = "Start!";
+    startButton.classList.add("hide");
+    highScoresButton.classList.add("hide");
+    highScoreScreen.style.display = "block";
+    
+}
+
 //checks if score is top 5 and adds it to array if so
 function checkScore() {
     var highScore = {
-        name:"",
-        score:timeLeft
+        name: "",
+        score: timeLeft
     };
 
     for (var i = 0; i < highScores.length; i++) {
@@ -218,4 +245,12 @@ function checkScore() {
     }
 }
 
-function renderHighScores()
+// adds high scores to the high scores page
+function renderHighScores() {
+    highScoreList.innerHTML = "";
+    for (var i = 0; i < highScores.length; i++) {
+        var score = document.createElement("li");
+        score.textContent = ((i + 1) + ".  " + highScores[i].name + ":  " + highScores[i].score);
+        highScoreList.appendChild(score);
+    }
+}

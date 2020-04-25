@@ -47,7 +47,7 @@ h3 {
     margin: 0 auto;
 }
 
-#victoryScreen {
+.displayScreen {
     width: 100%;
     display: none;
     margin: 30px 0;
