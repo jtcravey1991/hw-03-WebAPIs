@@ -2,6 +2,7 @@ body {
     background: rgb(36, 36, 36);
     color: white;
     text-align: center;
+    padding-bottom: 50px;
 }
 
 h1 {
@@ -30,6 +31,7 @@ h3 {
     border-color: white;
     border-radius: 10px;
     background: rgb(70, 70, 70);
+    padding-bottom: 20px;
 }
 
 #currentQuestion {
@@ -50,6 +52,24 @@ h3 {
     border-radius: 7px;
     padding: 10px 20px;
     background-color: white;
+}
+
+li button {
+    width: 80%;
+    padding: 10px 0;
+    margin: 5px 0;
+    background: black;
+    color: white;
+    border-style: solid;
+    border-color: white;
+    border-width: 2px;
+    border-radius: 7px;   
+}
+
+li button:hover {
+    background: white;
+    border-color:black;
+    color: black;
 }
 
 #timer {
