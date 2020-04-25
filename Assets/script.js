@@ -65,6 +65,8 @@ var questionObjects = [
 
 // start button listener
 startButton.addEventListener("click", function () {
+    timeLeft = 60;
+    currentIndex = 0;
     victoryScreen.style.display = "none";
     startButton.classList.add("hide");
     highScoresButton.classList.add("hide");
@@ -140,7 +142,6 @@ function clearResults() {
 function startTimer() {
     timer = setInterval(function () {
         timeLeft--;
-        console.log(timeLeft);
         if (timeLeft < 0) {
             alert("You have failed, please try again!");
             initialize();
@@ -162,8 +163,6 @@ function initialize() {
 }
 
 function displayVictoryScreen() {
-    timeLeft = 60;
-    currentIndex = 0;
     questionContent.style.display = "none";
     finalScoreSpan.textContent = timeLeft;
     startButton.textContent = "Play Again!";
