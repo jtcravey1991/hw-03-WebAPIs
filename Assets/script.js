@@ -240,7 +240,8 @@ function checkScore() {
     for (var i = 0; i < highScores.length; i++) {
         if (timeLeft > parseInt(highScores[i].score)) {
             highScore.name = prompt("Congrats! You made a high score! Please enter your name.")
-            highScores.splice(i, 1, highScore);
+            highScores.splice(i, 0, highScore);
+            highScores.splice(5, 1);
             saveScores();
             i = highScores.length;
         }
