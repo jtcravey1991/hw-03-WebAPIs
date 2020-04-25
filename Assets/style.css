@@ -18,6 +18,9 @@ h3 {
 }
 
 .quizContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     margin: 30px auto 0;
     max-width: 50%;
     height: max-content;
@@ -35,6 +38,24 @@ h3 {
     width: 90%;
     height: max-content;
     padding: 10px 0 30px;
+}
+
+#questionContent {
+    width: 100%;
+    display: none;
+    margin: 0 auto;
+}
+
+#startButton {
+    left: 50%;
+    border-radius: 7px;
+    padding: 10px 20px;
+    background-color: white;
+}
+
+#timer {
+    text-align: left;
+    margin: 50px 0 0 15px;
 }
 
 @media only screen and (max-width: 750px), screen and (max-height: 400px) {
