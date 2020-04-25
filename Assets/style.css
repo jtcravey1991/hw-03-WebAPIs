@@ -47,6 +47,12 @@ h3 {
     margin: 0 auto;
 }
 
+#victoryScreen {
+    width: 100%;
+    display: none;
+    margin: 30px 0;
+}
+
 .mainButton {
     margin: 10px;
     border-radius: 7px;

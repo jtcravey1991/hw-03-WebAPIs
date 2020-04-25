@@ -7,12 +7,17 @@ var currentQuestion = document.getElementById("currentQuestion");
 var answerDisplayList = document.getElementById("answerDisplayList");
 var timeLeftSpan = document.getElementById("timeLeftSpan");
 var results = document.getElementById("results");
+var victoryScreen = document.getElementById("victoryScreen");
+var finalScoreSpan = document.getElementById("finalScoreSpan");
 
 // used to track current index
 var currentIndex = 0;
 
-//
+// time left on the clock
 var timeLeft = 60;
+
+// declaring interval variable
+var timer;
 
 // array of question objects
 var questionObjects = [
@@ -60,6 +65,7 @@ var questionObjects = [
 
 // start button listener
 startButton.addEventListener("click", function () {
+    victoryScreen.style.display = "none";
     startButton.classList.add("hide");
     highScoresButton.classList.add("hide");
     questionContent.style.display = "block";
@@ -83,11 +89,13 @@ answerDisplayList.addEventListener("click", function (e) {
             timeLeftSpan.textContent = timeLeft;
         }
         setTimeout(clearResults, 1500)
-        if (currentIndex < questionObjects.length - 1) {
-            currentIndex++;
-            displayQuestion(currentIndex);
-            console.log(currentIndex);
+        currentIndex++;
+        if (currentIndex === questionObjects.length) {
+            clearInterval(timer);
+            displayVictoryScreen();
+            return;
         }
+        displayQuestion(currentIndex);
     }
 });
 
@@ -130,8 +138,9 @@ function clearResults() {
 }
 
 function startTimer() {
-    var timer = setInterval(function () {
+    timer = setInterval(function () {
         timeLeft--;
+        console.log(timeLeft);
         if (timeLeft < 0) {
             alert("You have failed, please try again!");
             initialize();
@@ -144,8 +153,21 @@ function startTimer() {
 function initialize() {
     currentIndex = 0;
     timeLeft = 60;
+    victoryScreen.style.display = "none";
     questionContent.style.display = "none";
+    startButton.textContent = "Start!";
     startButton.classList.remove("hide");
     highScoresButton.classList.remove("hide");
-    quizContainer.setAttribute("style", "justify-content: center;")
+    quizContainer.setAttribute("style", "justify-content: center;");
+}
+
+function displayVictoryScreen() {
+    timeLeft = 60;
+    currentIndex = 0;
+    questionContent.style.display = "none";
+    finalScoreSpan.textContent = timeLeft;
+    startButton.textContent = "Play Again!";
+    victoryScreen.style.display = "block";
+    startButton.classList.remove("hide");
+    highScoresButton.classList.remove("hide");
 }
